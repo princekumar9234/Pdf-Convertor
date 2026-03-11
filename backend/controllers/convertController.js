@@ -106,6 +106,9 @@ const downloadPDF = async (req, res, next) => {
       } catch { /* non-fatal */ }
     }
 
+    // Set explicit headers to help the browser understand the file type
+    res.setHeader('Content-Type', ext === '.pdf' ? 'application/pdf' : 'application/zip');
+    
     // Use res.download to handle headers and filename correctly
     res.download(filePath, `PixelPDF_${safeFilename}`, (err) => {
       if (err) {

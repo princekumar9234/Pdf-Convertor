@@ -102,7 +102,8 @@ export default function Convert() {
     const downloadUrl = `/api/download/${result.filename}`;
     const a = document.createElement('a');
     a.href = downloadUrl;
-    a.setAttribute('download', '');
+    // Explicitly set the filename with .pdf extension
+    a.setAttribute('download', `PixelPDF_${Date.now()}.pdf`);
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

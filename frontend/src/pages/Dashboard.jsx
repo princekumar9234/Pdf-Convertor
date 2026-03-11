@@ -88,7 +88,7 @@ export default function Dashboard() {
     const downloadUrl = `/api/download/${filename}`;
     const a = document.createElement('a');
     a.href = downloadUrl;
-    a.setAttribute('download', '');
+    a.setAttribute('download', `PixelPDF_${filename}`);
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
