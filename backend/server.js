@@ -76,7 +76,19 @@ app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'PDF Convertor API is running 🚀', timestamp: new Date().toISOString() });
 });
 
-// 404 handler
+// Serve static files from the React frontend app
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+  app.get('*', (req, res, next) => {
+    if (req.originalUrl.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+  });
+}
+
+// 404 handler (fallback if not handled by production static above)
 app.use('*', (req, res) => {
   res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
 });
